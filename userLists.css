@@ -1,0 +1,22 @@
+/* Team 17 - Brisa Andrade, 
+* Project 3: MovieList , 581 Software Engineering II, 11.22.2024 -->
+* UserLists.css
+* This file is made up of the CCS Styling used to display user lists in the MovieList website
+*/
+
+   <h1>My List ()</h1>
+        <button id="createListButton" type="button" onclick="openPopUp('createListPopup')">New List</button>
+        <hr/>
+        
+        <div class="List" id="listName">
+            <h3>ListName</h3>
+            <p>ListOverview</p>
+            <button id="deleteListButton" type="button" onclick="deleteList(id)">Delete</button>
+        </div>
+
+
+    .listHeading h1{
+        font-family: "IBM Plex Sans", sans-serif;
+        font-size: 18px;
+        color: CEC3D3;
+        }

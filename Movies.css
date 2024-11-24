@@ -1,0 +1,59 @@
+/* Team 17 - Brisa Andrade, 
+* Project 3: MovieList , 581 Software Engineering II, 11.07.2024 -->
+* Movies.css
+* This file is made up of the CCS Styling used to display movies after a user does a search, and in the discover webpage
+*/
+
+
+/*styles the display a single movie*/
+
+
+.movieCatalog{
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    }
+
+.movie {
+    text-align: center;
+    width: 200;
+    margin: 15;
+    }
+
+.movie img{
+    width:100%;
+    }
+
+.movieInfo h1{
+    
+    text-decoration:none;
+    color: CEC3D3;
+    font-size: 14px;
+    font-family:"IBM Plex Sans", sans-serif; 
+    letter-spacing: 1px;
+    margin-top: 10;
+    }
+.movieInfo p{
+    text-decoration:none;
+    color: 9058D8;
+    font-size: 12px;
+    font-family:"IBM Plex Sans", sans-serif; 
+    letter-spacing: 1px;
+    padding:0;
+    margin: 0;
+    }
+
+/*Styles grid that displays multiple movies*/
+
+/*Styles drop down menu and filter inputs*/
+
+/*Filter Drop Dowm Menu*/
+.filterContent{
+    display: none;
+    }
+
+
+
+    

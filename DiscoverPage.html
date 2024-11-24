@@ -1,0 +1,126 @@
+<!-- Team 17 - Brisa Andrade-->
+<!--Project 2: MovieList , 581 Software Engineering II, 10.27.2024 -->
+<!-- DiscoverPage.html-->
+
+<!--
+* The MovieList discover displays a long list of movies in (grid view or in list view) and allows you to filter results to narrow down your search. This website is only available to logged in users.
+-->
+
+
+<html>
+    <head>
+         <meta charset="UTF-8">
+        <!--Allows for use of Google fonts IBM Plex Sans and Baumans in the Website-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Baumans&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+
+        <!--Symbols and Icon Attribute Links-->
+
+        <!--Connects css stylesheet to the current html file-->
+        <link rel="stylesheet" type="text/css" href="MovieListStyle.css">
+        <link rel="stylesheet" type="text/css" href="MovieListPopupStyle.css">
+        <link rel="stylesheet" type="text/css" href="Movies.css">
+
+
+    </head>
+
+    <body>
+
+    <!--Navigation Header and Search Bar-->
+    <!--Outercontainer meant to control window size-->
+    <div class="window">
+
+        <!--Container holding elements for the navigation tab-->
+        <div class="navigationtab">
+            
+            <p>MovieList</p>
+            
+            <!--Input Field that allows user to search the database -->
+            <form id ="searchForm" class = "searchForm">
+               <input type= "text" id="searchingKey" class="searchingKey" placeHolder="Search MovieList..."> 
+            </form>
+            
+
+            <!--Links to other parts of the website-->
+            <div class="links">
+                <a href="DiscoverPage.html">Discover</a>
+                <a href="RandomMoviePickerPage.html">Random Movie</a>
+                <a href="UserListPage.html">My Lists</a>
+                <a href="UserProfilePage.html">My Profile</a>a
+            </div>
+
+            <!--Button that allows for a user to log in or sign up-->
+            <button id ="logInButton" type="button" onclick="logOut()">log out </button>
+            
+        </div> <!--end navigationTab-->
+
+        
+
+        <!--Dropdown Menu and Filters Are Here-->>
+
+        <button type="button" class = "collapsible" onclick="showFilters()"></button>
+        
+        <div class="filterContent "id="filterContent">
+        
+                <form id="movieFilters" class="movieFilters">
+                    <div class="genreList">
+                    <label for="Genre">Genres: </label>
+                    <input type="text" id="Genre" name="Genre" placeholder="search genres ...">
+                    <ul id="genreList">
+                        <li><p id="28">Action</p></li>
+                        <li><p id="12">Adventure</p></li>
+                        <li><p id="16">Animation</p></li>
+                        <li><p id="35">Comedy</p></li>
+                        <li><p id="99">Documentary</p></li>
+                        <li><p id="18">Drama</p></li>
+                        <li><p id="10751">Family</p></li>
+                        <li><p id="14">Fantasy</p></li>
+                        <li><p id="36">History</p></li>
+                        <li><p id="27">Horror</p></li>
+                        <li><p id="9648">Mystery</p></li>
+                        <li><p id="10749">Romance</p></li>
+                        <li><p id="878">Science Fiction</p></li>
+                        <li><p id="53">Thriller</p></li>
+                        <li><p id="37">Western</p></li>   
+                    </ul>
+                        
+                <br><br>
+                </div>
+        
+                <label for="releaseYear">Release Year: </label>
+                <input type="text" id="releaseYear" name="releaseYear"><br><br>
+
+                <div class="movieScore">
+                <label for="userRating">Movie Score: </label>
+                    <button type="button" class="ratingButton" onclick="setRating(5)"> >9.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(4)"> >8.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(3)"> >7.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(2)"> >6.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(1)"> >5.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(5)"> >4.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(4)"> >3.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(3)"> >2.0 </button>
+                    <button type="button" class="ratingButton" onclick="setRating(2)"> >1.0 </button>
+                    
+                </div>
+
+                    
+                <input type="submit" value="Search">
+                </form>
+            
+        </div> <!--End Filter Dropdown Menu-->
+
+        <!--Movie Display Starts Here-->
+ 
+         <div class="movieCatalog" id="movieCatalog" >
+           
+         </div> <!--Ends movieCatalog-This is dynamically filled out with javascript!-->
+    </div> <!--ends Window Div-->
+        
+<script src="UserLogOn.js" type="text/javascript"></script>
+        <script src="UserSearchResult.js" type="text/javascript"></script>
+        
+    </body>
+</html>
