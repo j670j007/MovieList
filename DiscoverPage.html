@@ -6,27 +6,39 @@
 * The MovieList discover displays a long list of movies in (grid view or in list view) and allows you to filter results to narrow down your search. This website is only available to logged in users.
 -->
 
-
 <html>
-    <head>
-         <meta charset="UTF-8">
-        <!--Allows for use of Google fonts IBM Plex Sans and Baumans in the Website-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Baumans&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+<head>
+    <!--Allows for use of Google fonts IBM Plex Sans and Baumans in the Website-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baumans&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
 
+    <!--Connects css stylesheet to the current html file-->
+    <link rel="stylesheet" type="text/css" href="MovieListStyle.css">
+    <link rel="stylesheet" type="text/css" href="MovieListPopupStyle.css">
+    <link rel="stylesheet" type="text/css" href="Movies.css">
 
-        <!--Symbols and Icon Attribute Links-->
+    <style>
+        label {
+            font-size: 30px; /* Change this value to your desired font size */
+            color: #9058D8;   /* Change this value to your desired color */
+        }
+        h2 {
+            font-size: 30px; /* Change this value to your desired font size */
+            color: #9058D8; /* Change this value to your desired color */
+        }
+        p2 {
+            font-size: 20px; /* Change this value to your desired font size */
+            color: #9058D8; /* Change this value to your desired color */
+        }
 
-        <!--Connects css stylesheet to the current html file-->
-        <link rel="stylesheet" type="text/css" href="MovieListStyle.css">
-        <link rel="stylesheet" type="text/css" href="MovieListPopupStyle.css">
-        <link rel="stylesheet" type="text/css" href="Movies.css">
+    </style>
 
+    <script src="UserLogOn.js" type="text/javascript"></script>
 
-    </head>
+</head>
 
-    <body>
+<body>
 
     <!--Navigation Header and Search Bar-->
     <!--Outercontainer meant to control window size-->
@@ -34,93 +46,168 @@
 
         <!--Container holding elements for the navigation tab-->
         <div class="navigationtab">
-            
             <p>MovieList</p>
-            
-            <!--Input Field that allows user to search the database -->
-            <form id ="searchForm" class = "searchForm">
-               <input type= "text" id="searchingKey" class="searchingKey" placeHolder="Search MovieList..."> 
-            </form>
-            
 
             <!--Links to other parts of the website-->
-            <div class="links">
-                <a href="DiscoverPage.html">Discover</a>
-                <a href="RandomMoviePickerPage.html">Random Movie</a>
-                <a href="UserListPage.html">My Lists</a>
-                <a href="UserProfilePage.html">My Profile</a>a
-            </div>
+            <a href="DiscoverPage.html">Discover</a>
+            <a href="RandomMoviePickerPage.html"> Random Movie</a>
+            <a href="UserListPage.html">My Lists</a>
+            <a href="UserProfilePage.html">My Profile</a>
 
             <!--Button that allows for a user to log in or sign up-->
-            <button id ="logInButton" type="button" onclick="logOut()">log out </button>
-            
-        </div> <!--end navigationTab-->
+            <button id="logInButton" type="button" onclick="logOut()">log out </button>
 
-        
+            <br style= line-height:400px; >
 
-        <!--Dropdown Menu and Filters Are Here-->>
+        </div>
 
-        <button type="button" class = "collapsible" onclick="showFilters()"></button>
-        
-        <div class="filterContent "id="filterContent">
-        
-                <form id="movieFilters" class="movieFilters">
-                    <div class="genreList">
-                    <label for="Genre">Genres: </label>
-                    <input type="text" id="Genre" name="Genre" placeholder="search genres ...">
-                    <ul id="genreList">
-                        <li><p id="28">Action</p></li>
-                        <li><p id="12">Adventure</p></li>
-                        <li><p id="16">Animation</p></li>
-                        <li><p id="35">Comedy</p></li>
-                        <li><p id="99">Documentary</p></li>
-                        <li><p id="18">Drama</p></li>
-                        <li><p id="10751">Family</p></li>
-                        <li><p id="14">Fantasy</p></li>
-                        <li><p id="36">History</p></li>
-                        <li><p id="27">Horror</p></li>
-                        <li><p id="9648">Mystery</p></li>
-                        <li><p id="10749">Romance</p></li>
-                        <li><p id="878">Science Fiction</p></li>
-                        <li><p id="53">Thriller</p></li>
-                        <li><p id="37">Western</p></li>   
-                    </ul>
-                        
-                <br><br>
-                </div>
-        
-                <label for="releaseYear">Release Year: </label>
-                <input type="text" id="releaseYear" name="releaseYear"><br><br>
+        <!--DiscoverPage Web Page Starts Here-->
+        <!--Add In Filters Here-->>
 
-                <div class="movieScore">
-                <label for="userRating">Movie Score: </label>
-                    <button type="button" class="ratingButton" onclick="setRating(5)"> >9.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(4)"> >8.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(3)"> >7.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(2)"> >6.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(1)"> >5.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(5)"> >4.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(4)"> >3.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(3)"> >2.0 </button>
-                    <button type="button" class="ratingButton" onclick="setRating(2)"> >1.0 </button>
-                    
-                </div>
+        <!--Movie Discovery Starts Here-->
+        <!--Single Move element-->
+        <div class="test">
+            <h2>Get ready to discover whats trending!</h2>
+            <br><br><br><br>
 
-                    
-                <input type="submit" value="Search">
-                </form>
-            
-        </div> <!--End Filter Dropdown Menu-->
+        </div>
+        <br style= line-height:400px; >
+        <!--Container holding elements for the navigation tab-->
+        <div class="navigationtab">
+            <!--Input Field that allows user to search the database -->
 
-        <!--Movie Display Starts Here-->
- 
-         <div class="movieCatalog" id="movieCatalog" >
-           
-         </div> <!--Ends movieCatalog-This is dynamically filled out with javascript!-->
-    </div> <!--ends Window Div-->
-        
-<script src="UserLogOn.js" type="text/javascript"></script>
-        <script src="UserSearchResult.js" type="text/javascript"></script>
-        
-    </body>
+            <p></p>
+            <br />
+            <p>   Fill in the form to Search the Database  </p>
+
+            <form id="Movie Search">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter movie title"><br><br>
+                <label for="Year">Year:   </label>
+                <input type="text" id="Year" name="Year" placeholder="Enter Year"><br><br>
+                <label for="Genre">Genre: </label>
+                <input type="text" id="Genre" name="Genre" placeholder="Enter Genre"><br><br>
+                <label for="actorName">Actor:</label>
+                <input type="text" id="actorName" name="actorName" placeholder="Enter Actor"><br><br>
+
+                <button type="button" onclick="fetchMoviesByTitle()">Submit</button>
+            </form>
+            <div id="movieInfo"></div>  <!--  This where the javascript displays the results -->
+
+            <h1></h1>
+        </div>
+    </div>
+
+    <!--   
+        <div class="dropDownMenu">
+        </div>  
+    -->
+
+    <div class="movieCatalog">
+
+    </div>  <!--  END WINDOW DIV  -->
+
+    <script>
+        async function fetchMoviesByTitle() {
+            // Get the value from the input field
+
+            const movieTitle = document.getElementById('title').value;
+            const movieYear = document.getElementById('Year').value;
+            const actorName = document.getElementById('actorName').value;
+            const genreName = document.getElementById('Genre').value;
+            //const movieTitle = document.getElementById('title').value;
+
+            let greeting1 = `GREET-TITLE: ${movieTitle}!`;
+            console.log(greeting1); // Outputs: TITLE
+            let greeting2 = `GREET-YEAR: ${movieYear}!`;
+            console.log(greeting2); // Outputs: YEAR
+            let greeting3 = `GREET-ACTOR: ${actorName}!`;
+            console.log(greeting3); // Outputs: ACTOR
+            let greeting4 = `GREET-GENRE: ${genreName}!`;
+            console.log(greeting4); // Outputs: GENRE
+
+            const apiKey = 'f6631092fc4ee8613f702eb966add6ba'; // TMDb API key
+
+            const response1 = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`);
+            const data1 = await response1.json();
+            const genres = data1.genres;
+            const genre = genres.find(g => g.name.toLowerCase() === genreName.toLowerCase());
+
+            console.log("Start : ", genre);
+            // console.log("GenreList: ", genres);
+
+            if (movieTitle) {  //  FIND MOVIES WITH A GIVEN TITLE
+
+                const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${movieTitle}`);
+                const data = await response.json();
+
+                displayMovies(data.results);
+            }
+
+            if (movieYear) {  //  FIND MOVIES FOR A GIVEN YEAR
+
+                const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&primary_release_year=${movieYear}`);
+                const data = await response.json();
+
+                displayMovies(data.results);
+            }
+
+            if(actorName){  // FIND MOVIES WITH A GIVEN ACTOR
+                const actorResponse = await fetch(`https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${actorName}`);
+                const actorData = await actorResponse.json();
+                const actorId = actorData.results[0]?.id;
+
+                console.log("Actor ID: ", actorId);
+
+                if (actorId) {
+                    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_cast=${actorId}`);
+                    const data = await response.json();
+
+                    displayMovies(data.results);
+                } 
+            }
+
+            if(genre) {  //  FIND MOVIES WITH A GIVEN GENRE
+                const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}`);
+                const data = await response.json();
+
+                console.log("ID : ", genre.id);
+
+                    displayMovies(data.results);
+            }
+
+        }  //  END FETCH MOVIES
+
+        async function fetchAdditionalMovieData(movieId) {
+            const apiKey = 'f6631092fc4ee8613f702eb966add6ba'; // TMDb API key
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&append_to_response=credits,genres`);
+            const data = await response.json();
+            return data;
+        }
+
+        async function displayMovies(movies) {
+            const movieInfo = document.getElementById('movieInfo');
+            movieInfo.innerHTML = ''; // Clear previous results
+
+            for (const movie of movies) {
+                const movieData = await fetchAdditionalMovieData(movie.id);
+
+                const genres = movieData.genres.map(genre => genre.name).join(', ');
+                const actors = movieData.credits.cast.map(actor => actor.name).join(', ');
+
+                const movieElement = document.createElement('div');
+                movieElement.innerHTML = `
+                        <h2>${movieData.title} (${movieData.release_date})</h2>
+                        <img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title} Poster"><br><br>
+                        <p2>Genre: ${genres}</p2><br><br>
+                        <p2>Actors: ${actors}</p2><br><br>
+                        <p2>Plot: ${movieData.overview}</p2><br><br>
+                    `;
+                movieInfo.appendChild(movieElement);
+            }
+
+        }
+
+    </script>
+</body>
 </html>
