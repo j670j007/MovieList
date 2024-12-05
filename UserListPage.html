@@ -8,25 +8,183 @@
 
 
 <html>
-    <head>
-         <meta charset="UTF-8">
-        <!--Allows for use of Google fonts IBM Plex Sans and Baumans in the Website-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Baumans&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+<head>
+    <!--Allows for use of Google fonts IBM Plex Sans and Baumans in the Website-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baumans&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+    <!--Connects css stylesheet to the current html file-->
+    <link rel="stylesheet" type="text/css" href="MovieListStyle.css">
+    <link rel="stylesheet" type="text/css" href="MovieListPopupStyle.css">
+    <link rel="stylesheet" type="text/css" href="Movies.css">
+
+    <style>
+        label {
+            font-size: 30px; /* Change this value to your desired font size */
+            color: #9058D8;   /* Change this value to your desired color */
+        }
+        h2 {
+            font-size: 30px; /* Change this value to your desired font size */
+            color: #9058D8; /* Change this value to your desired color */
+        }
+        p2 {
+            font-size: 20px; /* Change this value to your desired font size */
+            color: #9058D8; /* Change this value to your desired color */
+        }
+
+    </style>
+
+    <script src="UserLogOn.js" type="text/javascript"></script>
+
+<script>
+ // Function to create a new list
+        async function createList() {
+            const listName = document.getElementById('list-name').value;
+
+            if (!listName.trim()) {
+                alert('Please enter a list name.');
+                return;
+            }
+
+            try {
+                const response = await fetch('process_movie_lists.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'create_list',
+                        listName: listName
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.list_id) {
+                    alert('List created successfully!');
+                    // Store the list_id in local storage
+                    localStorage.setItem('current_list_id', data.list_id);
+                } else {
+                    alert(data.error || 'Failed to create list.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while creating the list.');
+            }
+        }
+
+        async function addMoviesToList() {
+    const listId = localStorage.getItem('current_list_id');
+    const movieResults = sessionStorage.getItem('movieResults'); // Get the movie results from session storage
+
+    // Check if listId exists
+    if (!listId) {
+        alert('Please create or select a list first.');
+        return;
+    }
+
+    // Check if movieResults exists and is a valid JSON string
+    if (!movieResults) {
+        alert('No movies found in session storage. Please perform a search first.');
+        return;
+    }
+
+    console.log('Raw movieResults from sessionStorage:', movieResults);
+
+    let parsedMovies;
+    try {
+        parsedMovies = JSON.parse(movieResults);  // Try parsing the movie results
+        console.log('Parsed movieResults:', parsedMovies);
+    } catch (error) {
+        console.error('Error parsing movieResults JSON:', error);
+        alert('Failed to parse movie data. Please try again.');
+        return;
+    }
+
+    // Extract movie IDs
+    const movieIds = parsedMovies.map(movie => movie.id);
+    console.log('Extracted movie IDs:', movieIds);
+
+    // Send the movie data to the server
+    try {
+        const response = await fetch('process_movie_lists.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'add_movies',
+                list_id: listId,
+                movie_ids: movieIds
+            })
+        });
+
+        const text = await response.text();  // Get the raw response text
+        console.log('Server Response:', text);
+
+        let data;
+        try {
+            data = JSON.parse(text);  // Parse the raw response text to JSON
+            console.log('Parsed Server Response:', data);
+        } catch (error) {
+            console.error('Error parsing server response JSON:', error);
+            alert('Failed to parse server response.');
+            return;
+        }
+
+        if (data.success) {
+            alert('Movies added to the list successfully!');
+        } else {
+            alert(data.error || 'Failed to add movies to the list.');
+        }
+    } catch (error) {
+        console.error('Error during fetch request:', error);
+        alert('An error occurred while adding movies to the list.');
+    }
+}
 
 
-        <!--Symbols and Icon Attribute Links-->
 
-        <!--Connects css stylesheet to the current html file-->
-        <link rel="stylesheet" type="text/css" href="MovieListStyle.css">
-        <link rel="stylesheet" type="text/css" href="MovieListPopupStyle.css">
-        <link rel="stylesheet" type="text/css" href="Movies.css">
-        <link rel="stylesheet" type="text/css" href="userLists.css">
 
-    </head>
+async function createListAndAddMovies() {
+    const listName = document.getElementById('list-name').value;
 
-    <body>
+    if (!listName) {
+        alert('Please enter a list name.');
+        return;
+    }
+
+    try {
+        const response = await fetch('process_movie_lists.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'create_list',
+                listName: listName
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.list_id) {
+            alert('List created successfully!');
+            localStorage.setItem('current_list_id', data.list_id); // Store the created list_id
+            addMoviesToList(); // Call the addMoviesToList function
+        } else {
+            alert('Failed to create list.');
+        }
+    } catch (error) {
+        console.error('Error creating list:', error);
+        alert('An error occurred while creating the list.');
+    }
+}
+
+    </script>
+
+
+
+
+
+</head>
+
+<body>
 
     <!--Navigation Header and Search Bar-->
     <!--Outercontainer meant to control window size-->
@@ -34,73 +192,28 @@
 
         <!--Container holding elements for the navigation tab-->
         <div class="navigationtab">
-            
             <p>MovieList</p>
-            
-            <!--Input Field that allows user to search the database -->
-            <form id ="searchForm" class = "searchForm">
-               <input type= "text" id="searchingKey" class="searchingKey" placeHolder="Search MovieList..."> 
-            </form>
-            
 
             <!--Links to other parts of the website-->
-            <div class="links">
-                <a href="DiscoverPage.html">Discover</a>
-                <a href="RandomMoviePickerPage.html">Random Movie</a>
-                <a href="UserListPage.html">My Lists</a>
-                <a href="UserProfilePage.html">My Profile</a>a
-            </div>
+            <a href="DiscoverPage.html">Discover</a>
+            <a href="RandomMoviePickerPage.html"> Random Movie</a>
+            <a href="UserListPage.html">My Lists</a>
+            <a href="UserProfilePage.html">My Profile</a>
 
             <!--Button that allows for a user to log in or sign up-->
-            <button id ="logInButton" type="button" onclick="logOut()">log out </button>
-            
-        </div> <!--end navigationTab-->
+            <button id="logInButton" type="button" onclick="logOut()">log out </button>
 
-        <!--User Lists Start Here-->
-         <div class="createListPopup" id="createListPopup">
-            <form class="newListForm">
-                <!--Close Button-->
-                 <button type="button" class="closeBtn" onclick="popUpClose('createListPopup')"> X </button>
-                <!--Log In Button will send users to form that log them into MovieLIst-->
-                 <p id="newListLabel"> new list name </p>
-                  <input id= "newListNameText" type= "text" placeHolder="give your list a name!" >
-                <p id="listDescriptionLabel"> list description</p>
-                 <input id="listDescriptionText" type= "text" placeHolder=" Describe your list here!">
-                 <button type="button" class="createListBtn" onclick="createList()">Create List</button>
-            </form>
-             
-        </div> <!--end createListPopup-->
+        </div>
+
+
+        <div class="test">
         
-        <h1 class="listHeading">My List ()</h1>
-        <button id="createListButton" type="button" onclick="openPopUp('createListPopup')">New List</button>
-        <hr/>
-        
-        <div class="List" id="listName">
-            <h3>ListName</h3>
-            <p>ListOverview</p>
-            <button id="deleteListButton" type="button" onclick="deleteList(id)">Delete</button>
-        </div>
-
-           <div class="List" id="listName">
-            <h3>ListName</h3>
-            <p>ListOverview</p>
-            <button id="deleteListButton" type="button" onclick="deleteList(id)">Delete</button>
-        </div>
-
-           <div class="List" id="listName">
-            <h3>ListName</h3>
-            <p>ListOverview</p>
-            <button id="deleteListButton" type="button" onclick="deleteList(id)">Delete</button>
-        </div>
-
-           <div class="List" id="listName">
-            <h3>ListName</h3>
-            <p>ListOverview</p>
-            <button id="deleteListButton" type="button" onclick="deleteList(id)">Delete</button>
-        </div>
-
-         <!--Javascript being used below-->
-        <script src="UserLogOn.js" type="text/javascript"></script>
-        <script src="UserSearchResult.js" type="text/javascript"></script>
-    </body>
+           <form id="create-list-form">
+                <input type="text" id="list-name" placeholder="Enter list name" required>
+                <button type="button" onclick="createListAndAddMovies()">Create List</button>
+            </form>     
+	</div>
+     
+    </div>  <!--  END WINDOW  -->
+</body>
 </html>

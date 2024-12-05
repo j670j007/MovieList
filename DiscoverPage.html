@@ -115,26 +115,16 @@
             const movieYear = document.getElementById('Year').value;
             const actorName = document.getElementById('actorName').value;
             const genreName = document.getElementById('Genre').value;
-            //const movieTitle = document.getElementById('title').value;
-
-            let greeting1 = `GREET-TITLE: ${movieTitle}!`;
-            console.log(greeting1); // Outputs: TITLE
-            let greeting2 = `GREET-YEAR: ${movieYear}!`;
-            console.log(greeting2); // Outputs: YEAR
-            let greeting3 = `GREET-ACTOR: ${actorName}!`;
-            console.log(greeting3); // Outputs: ACTOR
-            let greeting4 = `GREET-GENRE: ${genreName}!`;
-            console.log(greeting4); // Outputs: GENRE
-
+            
             const apiKey = 'f6631092fc4ee8613f702eb966add6ba'; // TMDb API key
 
-            const response1 = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`);
+	const response1 = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`);
             const data1 = await response1.json();
             const genres = data1.genres;
             const genre = genres.find(g => g.name.toLowerCase() === genreName.toLowerCase());
 
             console.log("Start : ", genre);
-            // console.log("GenreList: ", genres);
+
 
             if (movieTitle) {  //  FIND MOVIES WITH A GIVEN TITLE
 
@@ -176,6 +166,7 @@
                     displayMovies(data.results);
             }
 
+		 
         }  //  END FETCH MOVIES
 
         async function fetchAdditionalMovieData(movieId) {
@@ -188,6 +179,10 @@
         async function displayMovies(movies) {
             const movieInfo = document.getElementById('movieInfo');
             movieInfo.innerHTML = ''; // Clear previous results
+
+	  // Store the raw API results in localStorage
+    	sessionStorage.setItem('movieResults', JSON.stringify(movies));
+
 
             for (const movie of movies) {
                 const movieData = await fetchAdditionalMovieData(movie.id);
@@ -205,6 +200,8 @@
                     `;
                 movieInfo.appendChild(movieElement);
             }
+	// Store JSON results directly in local storage 
+	
 
         }
 
